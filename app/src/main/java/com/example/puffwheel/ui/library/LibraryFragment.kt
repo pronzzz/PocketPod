@@ -21,13 +21,30 @@ import kotlinx.coroutines.launch
 class LibraryFragment : Fragment() {
     private var _binding: FragmentLibraryBinding? = null
     private val binding get() = _binding!!
-    private val adapter = LibraryAdapter { track ->
-        val controller = (requireActivity() as MainActivity).mediaController
-        controller?.let {
-            val mediaItem = MediaItem.fromUri(track.contentUri)
-            it.setMediaItem(mediaItem)
-            it.prepare()
-            it.play()
+    private val adapter: LibraryAdapter by lazy { 
+        LibraryAdapter { track: com.example.puffwheel.data.db.Track ->
+            val controller = (requireActivity() as MainActivity).mediaController
+            controller?.let {
+                val tracks = adapter.currentList
+                val mediaItems = tracks.map { t ->
+                    val metadata = androidx.media3.common.MediaMetadata.Builder()
+                        .setTitle(t.title)
+                        .setArtist(t.artist)
+                        .build()
+                    MediaItem.Builder()
+                        .setUri(t.contentUri)
+                        .setMediaId(t.id)
+                        .setMediaMetadata(metadata)
+                        .build()
+                }
+                
+                val index = tracks.indexOf(track)
+                if (index != -1) {
+                    it.setMediaItems(mediaItems, index, 0L)
+                    it.prepare()
+                    it.play()
+                }
+            }
         }
     }
 

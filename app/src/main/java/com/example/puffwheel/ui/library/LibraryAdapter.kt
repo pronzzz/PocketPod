@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.example.puffwheel.data.db.Track
 import com.example.puffwheel.databinding.ItemTrackBinding
 
@@ -25,11 +27,28 @@ class LibraryAdapter(
         private val binding: ItemTrackBinding,
         private val onClick: (Track) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+        
+        private var currentTrack: Track? = null
+        
         fun bind(track: Track) {
+            currentTrack = track
             binding.textTitle.text = track.title
             binding.textArtist.text = track.artist
+            binding.imageArtwork.setImageBitmap(null)
             binding.root.setOnClickListener {
                 onClick(track)
+            }
+            
+            val albumId = track.artworkKey?.toLongOrNull()
+            if (albumId != null) {
+                // In a real app we would use Glide/Coil or a dedicated memory cache
+                // For Phase 4 we demonstrate the loader API
+                (binding.root.context as? androidx.lifecycle.LifecycleOwner)?.lifecycleScope?.launch {
+                    val bitmap = com.example.puffwheel.util.ArtworkLoader.loadArtwork(binding.root.context, albumId)
+                    if (currentTrack?.id == track.id) {
+                        binding.imageArtwork.setImageBitmap(bitmap)
+                    }
+                }
             }
         }
     }
