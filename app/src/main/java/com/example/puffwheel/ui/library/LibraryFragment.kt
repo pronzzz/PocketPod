@@ -12,14 +12,24 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.media3.common.MediaItem
 import com.example.puffwheel.data.scanner.MediaScanner
 import com.example.puffwheel.databinding.FragmentLibraryBinding
+import com.example.puffwheel.ui.MainActivity
 import kotlinx.coroutines.launch
 
 class LibraryFragment : Fragment() {
     private var _binding: FragmentLibraryBinding? = null
     private val binding get() = _binding!!
-    private val adapter = LibraryAdapter()
+    private val adapter = LibraryAdapter { track ->
+        val controller = (requireActivity() as MainActivity).mediaController
+        controller?.let {
+            val mediaItem = MediaItem.fromUri(track.contentUri)
+            it.setMediaItem(mediaItem)
+            it.prepare()
+            it.play()
+        }
+    }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
