@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_now_playing"
+        android:title="@string/title_now_playing" />
+    <item
+        android:id="@+id/navigation_library"
+        android:title="@string/title_library" />
+    <item
+        android:id="@+id/navigation_playlists"
+        android:title="@string/title_playlists" />
+    <item
+        android:id="@+id/navigation_queue"
+        android:title="@string/title_queue" />
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="@string/title_settings" />
+</menu>
