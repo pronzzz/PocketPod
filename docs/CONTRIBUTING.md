@@ -1,14 +1,14 @@
-# Contributing to Puffwheel
+# Contributing to PocketPod
 
-Thank you for your interest in contributing to Puffwheel! To ensure the project remains true to its core vision, please read this guide before submitting pull requests.
+Thank you for your interest in contributing to PocketPod! To ensure the project remains true to its core vision, please read this guide before submitting pull requests.
 
 ## 🎯 Project Philosophy
 
-Puffwheel is built under strict constraints to serve low-end hardware. Our primary target is the **Galaxy J2 Pro running LineageOS (Android 11)**. 
+PocketPod is built under strict constraints to serve low-end hardware. Our primary target is the **Galaxy J2 Pro running LineageOS (Android 11)**. 
 
 ### Core Tenets:
 1. **Performance First**: The app MUST launch in under 2.5 seconds.
-2. **Minimal Memory Footprint**: We actively avoid heavy UI toolkits. This is why Puffwheel uses **XML Views and Fragments** instead of Jetpack Compose.
+2. **Minimal Memory Footprint**: We actively avoid heavy UI toolkits. This is why PocketPod uses **XML Views and Fragments** instead of Jetpack Compose.
 3. **Local-Only**: No network requests, no analytics, no cloud sync. The app must remain entirely functional offline and respect user privacy.
 4. **Ergonomic Design**: The UI should feel like a dedicated media player, centered around the tactile, wheel-inspired interface.
 
