@@ -50,4 +50,26 @@ interface LibraryDao {
 
     @Query("DELETE FROM tracks")
     suspend fun clearAllTracks()
+
+    // Playlists
+    @Query("SELECT * FROM playlists ORDER BY dateCreated ASC")
+    fun getAllPlaylists(): kotlinx.coroutines.flow.Flow<List<Playlist>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlaylist(playlist: Playlist)
+
+    @Query("DELETE FROM playlists WHERE id = :playlistId")
+    suspend fun deletePlaylist(playlistId: String)
+
+    @Query("UPDATE playlists SET name = :newName WHERE id = :playlistId")
+    suspend fun renamePlaylist(playlistId: String, newName: String)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlaylistTrack(playlistTrack: PlaylistTrack)
+
+    @Query("DELETE FROM playlist_tracks WHERE playlistId = :playlistId AND trackId = :trackId")
+    suspend fun removeTrackFromPlaylist(playlistId: String, trackId: String)
+
+    @Query("SELECT t.* FROM tracks t INNER JOIN playlist_tracks pt ON t.id = pt.trackId WHERE pt.playlistId = :playlistId ORDER BY pt.position ASC")
+    fun getTracksForPlaylist(playlistId: String): kotlinx.coroutines.flow.Flow<List<Track>>
 }
