@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.puffwheel"
+    namespace = "com.pocketpod.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.puffwheel"
+        applicationId = "com.pocketpod.app"
         minSdk = 30 // Target Android 11 as baseline
         targetSdk = 34
         versionCode = 1

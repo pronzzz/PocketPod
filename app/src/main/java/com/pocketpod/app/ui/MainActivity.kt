@@ -1,4 +1,4 @@
-package com.example.puffwheel.ui
+package com.pocketpod.app.ui
 
 import android.content.ComponentName
 import android.os.Bundle
@@ -7,9 +7,9 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.puffwheel.R
-import com.example.puffwheel.databinding.ActivityMainBinding
-import com.example.puffwheel.media.MediaPlaybackService
+import com.pocketpod.app.R
+import com.pocketpod.app.databinding.ActivityMainBinding
+import com.pocketpod.app.media.MediaPlaybackService
 import com.google.common.util.concurrent.ListenableFuture
 import androidx.core.content.ContextCompat
 

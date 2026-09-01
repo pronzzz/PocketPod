@@ -1,4 +1,4 @@
-package com.example.puffwheel.data.db
+package com.pocketpod.app.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
