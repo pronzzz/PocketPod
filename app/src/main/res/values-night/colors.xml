@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soft Dark Theme -->
+    <color name="background">#1E1E1E</color>
+    <color name="surface">#2A2A2A</color>
+    <color name="text_primary">#E0E0E0</color>
+    <color name="text_secondary">#999999</color>
+    <color name="accent">#A4B476</color>
+    
+    <color name="divider">#333333</color>
+    <color name="ripple">#1AFFFFFF</color>
+    <color name="battery_icon">#E0E0E0</color>
+</resources>
