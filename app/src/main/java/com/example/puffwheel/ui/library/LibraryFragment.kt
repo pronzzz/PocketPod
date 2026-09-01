@@ -27,9 +27,13 @@ class LibraryFragment : Fragment() {
             controller?.let {
                 val tracks = adapter.currentList
                 val mediaItems = tracks.map { t ->
+                    val extras = Bundle().apply {
+                        putString("album_id", t.artworkKey)
+                    }
                     val metadata = androidx.media3.common.MediaMetadata.Builder()
                         .setTitle(t.title)
                         .setArtist(t.artist)
+                        .setExtras(extras)
                         .build()
                     MediaItem.Builder()
                         .setUri(t.contentUri)

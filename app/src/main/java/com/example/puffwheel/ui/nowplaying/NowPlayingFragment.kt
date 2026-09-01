@@ -58,6 +58,8 @@ class NowPlayingFragment : Fragment() {
             (requireActivity() as MainActivity).mediaController?.seekToPrevious()
         }
         
+        // btn_queue and btn_select can be wired later
+        
         updateUI()
     }
     
@@ -72,20 +74,25 @@ class NowPlayingFragment : Fragment() {
             
             updatePlayPauseButton(controller.isPlaying)
             
-            // For artwork, we can parse the ID from the URI or metadata
-            // In a full implementation we'd inject this via MediaMetadata.Builder
-            val uriStr = currentMediaItem.localConfiguration?.uri?.toString() ?: ""
-            val id = uriStr.substringAfterLast("/").toLongOrNull()
+            binding.imageArtworkLarge.setImageBitmap(null)
             
-            if (id != null) {
-                // Since MediaStore uses the audio ID for the thumbnail in our loader or album ID
-                // Ideally we pass albumId to mediaMetadata, but this is a placeholder approach.
-                // We'll skip artwork loading if we don't have the explicit album ID
-                // For a robust implementation we should put albumId in MediaItem extras
+            val albumIdStr = currentMediaItem.mediaMetadata.extras?.getString("album_id")
+            val albumId = albumIdStr?.toLongOrNull()
+            
+            if (albumId != null) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val bitmap = ArtworkLoader.loadArtwork(requireContext(), albumId, 500, 500)
+                    // Ensure the track hasn't changed while loading
+                    val currentId = (requireActivity() as? MainActivity)?.mediaController?.currentMediaItem?.mediaId
+                    if (currentId == currentMediaItem.mediaId) {
+                        binding.imageArtworkLarge.setImageBitmap(bitmap)
+                    }
+                }
             }
         } else {
             binding.textNpTitle.text = "No track selected"
             binding.textNpArtist.text = ""
+            binding.imageArtworkLarge.setImageBitmap(null)
         }
     }
     
