@@ -5,11 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "albums")
 data class Album(
-    @PrimaryKey
-    val albumKey: String, // E.g. composite of album name and artist
+    @PrimaryKey val id: String,
     val title: String,
-    val albumArtist: String?,
-    val artworkKey: String?,
-    val year: Int?,
-    val trackCount: Int = 0
+    val artist: String?,
+    val releaseYear: Int?,
+    val artworkId: String?
 )
