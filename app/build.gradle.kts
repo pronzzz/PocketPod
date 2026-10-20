@@ -1,65 +1,77 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp)
 }
 
+// Optional release signing. Create keystore.properties (git-ignored) with
+// storeFile, storePassword, keyAlias, keyPassword. Without it, release builds
+// fall back to the debug key so anyone can still build an installable APK.
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+
 android {
-    namespace = "com.pocketpod.app"
-    compileSdk = 34
+    namespace = "io.github.pronzzz.wheelhouse"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.pocketpod.app"
-        minSdk = 30 // Target Android 11 as baseline
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
+        applicationId = "io.github.pronzzz.wheelhouse"
+        minSdk = 21
+        targetSdk = 35
+        versionCode = 100
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        if (keystoreProps.containsKey("storeFile")) {
+            create("release") {
+                storeFile = file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            signingConfig = signingConfigs.getByName("debug")
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+        }
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-    buildFeatures {
-        viewBinding = true
-    }
+    kotlinOptions { jvmTarget = "17" }
+    buildFeatures { buildConfig = true }
+    lint { abortOnError = false }
+}
+
+ksp {
+    arg("room.generateKotlin", "true")
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.session)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-    
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    
-    implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.session)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.ext.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

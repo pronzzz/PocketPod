@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "PocketPod"
+rootProject.name = "Wheelhouse"
 include(":app")

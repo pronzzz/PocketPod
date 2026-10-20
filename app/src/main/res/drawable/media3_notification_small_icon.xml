@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Monochrome click wheel for the media notification (Media3 picks it up by this name). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <!-- Ring drawn as a stroke so it renders the same on Android 5+ (no evenOdd fill needed). -->
+    <path android:strokeColor="#FFFFFFFF" android:strokeWidth="5"
+        android:pathData="M12,4.5a7.5,7.5 0 1,0 0.001,0z" />
+</vector>
