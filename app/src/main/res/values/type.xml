@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Define any custom typography overrides here if needed, 
-         for now we rely on the default Material typography but set up the file -->
-    <style name="TextAppearance.PocketPod.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textStyle">bold</item>
-    </style>
-</resources>

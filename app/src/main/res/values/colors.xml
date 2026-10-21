@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Soft Light Theme -->
-    <color name="background">#F5F5F0</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="text_primary">#222222</color>
-    <color name="text_secondary">#666666</color>
-    <color name="accent">#8A9A5B</color>
-    
-    <color name="divider">#E0E0E0</color>
-    <color name="ripple">#1A000000</color>
-    <color name="battery_icon">#222222</color>
+    <color name="splash">#FF15171B</color>
 </resources>
